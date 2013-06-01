@@ -1,3 +1,4 @@
+package hand;
 ///////////////////////////////////
 //Michael Melchione
 //AP Computer Science A
@@ -5,7 +6,10 @@
 //Card Games Program
 ///////////////////////////////////
 
+
 import java.util.ArrayList;
+
+import deck.Card;
 
 public class BJHand extends Hand
 {

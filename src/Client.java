@@ -1,3 +1,8 @@
+import game.Poker;
+import game.TexasHoldem;
+import game.VisualBJ;
+import game.VisualHL;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

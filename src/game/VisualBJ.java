@@ -1,9 +1,13 @@
+package game;
 ///////////////////////////////////
 //Michael Melchione
 //AP Computer Science A
 //6-1-12
 //VisualBJ
 ///////////////////////////////////
+
+
+import hand.BJHand;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -18,6 +22,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import deck.Deck;
 
 public class VisualBJ extends JFrame implements ActionListener{
 	

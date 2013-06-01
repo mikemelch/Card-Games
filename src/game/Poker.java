@@ -1,3 +1,4 @@
+package game;
 /*
  * 
  * 
@@ -5,6 +6,9 @@
  * 
  * 
  */
+
+
+import hand.PokerHand;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -21,6 +25,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import deck.Card;
+import deck.Deck;
 
 
 public class Poker extends JFrame implements ActionListener{
@@ -341,8 +348,8 @@ public class Poker extends JFrame implements ActionListener{
 			}
 			
 			if(exchanged){
-				for(int i = 0; i < dealerHand.hand.size(); i++){
-					Icon iconName = new ImageIcon(dealerHand.hand.get(i).showVal() + " of " + dealerHand.hand.get(i).getSuit() + ".gif");
+				for(int i = 0; i < dealerHand.getHand().size(); i++){
+					Icon iconName = new ImageIcon(dealerHand.getHand().get(i).showVal() + " of " + dealerHand.getHand().get(i).getSuit() + ".gif");
 					dealercards[i].setIcon(iconName);
 				}
 				fold.setEnabled(false);
@@ -397,8 +404,8 @@ public class Poker extends JFrame implements ActionListener{
 			fold.setEnabled(false);
 			
 			if(exchanged){
-				for(int i = 0; i < dealerHand.hand.size(); i++){
-					Icon iconName = new ImageIcon(dealerHand.hand.get(i).showVal() + " of " + dealerHand.hand.get(i).getSuit() + ".gif");
+				for(int i = 0; i < dealerHand.getHand().size(); i++){
+					Icon iconName = new ImageIcon(dealerHand.getHand().get(i).showVal() + " of " + dealerHand.getHand().get(i).getSuit() + ".gif");
 					dealercards[i].setIcon(iconName);
 				}
 				fold.setEnabled(false);

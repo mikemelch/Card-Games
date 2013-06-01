@@ -1,3 +1,4 @@
+package game;
 ///////////////////////////////////
 //Michael Melchione
 //AP Computer Science A
@@ -5,10 +6,14 @@
 //VisualHL
 ///////////////////////////////////
 
+
 import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
+
+import deck.Card;
+import deck.Deck;
 
 public class VisualHL extends JFrame implements ActionListener{
 	

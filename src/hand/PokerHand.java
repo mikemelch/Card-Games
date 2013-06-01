@@ -1,9 +1,14 @@
+package hand;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+
+import deck.Card;
+import deck.Deck;
 
 public class PokerHand extends Hand{
 	

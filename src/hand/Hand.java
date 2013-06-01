@@ -1,3 +1,4 @@
+package hand;
 ///////////////////////////////////
 //Michael Melchione
 //AP Computer Science A
@@ -5,7 +6,10 @@
 //BlackJack Program
 ///////////////////////////////////
 
+
 import java.util.ArrayList;
+
+import deck.Card;
 
 public class Hand 
 {
@@ -44,5 +48,9 @@ public class Hand
 	public Card getCard(int i)
 	{
 		return hand.get(i);
+	}
+	
+	public ArrayList<Card> getHand(){
+		return hand;
 	}
 }
