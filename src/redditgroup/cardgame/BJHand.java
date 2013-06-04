@@ -1,4 +1,4 @@
-package hand;
+package redditgroup.cardgame;
 ///////////////////////////////////
 //Michael Melchione
 //AP Computer Science A
@@ -6,10 +6,6 @@ package hand;
 //Card Games Program
 ///////////////////////////////////
 
-
-import java.util.ArrayList;
-
-import deck.Card;
 
 public class BJHand extends Hand
 {
@@ -28,7 +24,7 @@ public class BJHand extends Hand
 		for(i = 0; i < getSize(); i++)
 		{
 			temp = getCard(i);
-			cardVal = temp.getValue();
+			cardVal = temp.getCardNumber();
 			
 			if(cardVal > 10)
 				cardVal = 10;

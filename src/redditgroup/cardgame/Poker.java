@@ -1,4 +1,4 @@
-package game;
+package redditgroup.cardgame;
 /*
  * 
  * 
@@ -8,12 +8,11 @@ package game;
  */
 
 
-import hand.PokerHand;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.Box;
@@ -25,9 +24,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import deck.Card;
-import deck.Deck;
 
 
 public class Poker extends JFrame implements ActionListener{
@@ -60,7 +56,8 @@ public class Poker extends JFrame implements ActionListener{
 	
 	public Poker(String name){
 		super(name);
-		setBackground(new Color(0, 100, 0));
+        super.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setBackground(new Color(0, 100, 0));
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		setSize(600, 380);
 		keepcards = new ArrayList<Card>();
@@ -198,12 +195,15 @@ public class Poker extends JFrame implements ActionListener{
 				keep[i].setEnabled(false);
 				iconName = new ImageIcon("b.gif");
 				dealercards[i].setIcon(iconName);
-				iconName = new ImageIcon(playerHand.getCard(i).showVal() + " of " + playerHand.getCard(i).getSuit() + ".gif");
+                player.add(dealercards[i]);
+                repaint();
+				iconName = new ImageIcon(playerHand.getCard(i).getFileName());
 				playercards[i].setIcon(iconName);
 			}
 
 		}
-		
+
+
 		/**
 		 * On each click of a "Keep" Button:
 		 * 1. Disabled
@@ -279,7 +279,7 @@ public class Poker extends JFrame implements ActionListener{
 			 * GUI changing of pictures
 			 */
 			for(int i = 0; i < 5; i++){
-				iconName = new ImageIcon(playerHand.getCard(i).showVal() + " of " + playerHand.getCard(i).getSuit() + ".gif");
+				iconName = new ImageIcon(playerHand.getCard(i).getFileName());
 				playercards[i].setIcon(iconName);
 			}
 
@@ -306,11 +306,18 @@ public class Poker extends JFrame implements ActionListener{
 		}
 		
 		else if(event.equals("Bet!")){
-			
-			playerbet = Integer.parseInt(bettf.getText().trim());
+
+            try{
+			    playerbet = Integer.parseInt(bettf.getText().trim());
+            }
+            catch(NumberFormatException e){
+                results.setText("Please enter a number");
+                return;
+            }
+
 			bettf.setText("       ");
 			if(playerbet < 0){
-				bettf.setText("No cheating!");
+                results.setText("No cheating!");
 				return;
 			}
 
@@ -349,7 +356,7 @@ public class Poker extends JFrame implements ActionListener{
 			
 			if(exchanged){
 				for(int i = 0; i < dealerHand.getHand().size(); i++){
-					Icon iconName = new ImageIcon(dealerHand.getHand().get(i).showVal() + " of " + dealerHand.getHand().get(i).getSuit() + ".gif");
+					Icon iconName = new ImageIcon(dealerHand.getHand().get(i).getFileName());
 					dealercards[i].setIcon(iconName);
 				}
 				fold.setEnabled(false);
@@ -405,7 +412,7 @@ public class Poker extends JFrame implements ActionListener{
 			
 			if(exchanged){
 				for(int i = 0; i < dealerHand.getHand().size(); i++){
-					Icon iconName = new ImageIcon(dealerHand.getHand().get(i).showVal() + " of " + dealerHand.getHand().get(i).getSuit() + ".gif");
+					Icon iconName = new ImageIcon(dealerHand.getHand().get(i).getFileName());
 					dealercards[i].setIcon(iconName);
 				}
 				fold.setEnabled(false);

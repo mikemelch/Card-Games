@@ -1,4 +1,4 @@
-package hand;
+package redditgroup.cardgame;
 ///////////////////////////////////
 //Michael Melchione
 //AP Computer Science A
@@ -8,8 +8,6 @@ package hand;
 
 
 import java.util.ArrayList;
-
-import deck.Card;
 
 public class Hand 
 {

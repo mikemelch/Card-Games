@@ -1,14 +1,8 @@
-package hand;
+package redditgroup.cardgame;
 
 import java.util.ArrayList;
-import java.util.Random;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-
-import deck.Card;
-import deck.Deck;
 
 public class PokerHand extends Hand{
 	
@@ -31,7 +25,7 @@ public class PokerHand extends Hand{
 		
 		for (int pass=1; pass < n; pass++) { 
 	        for (int i=0; i < n-pass; i++) {
-	            if (temp[i].getValue() > temp[i+1].getValue()) {
+	            if (temp[i].getCardNumber() > temp[i+1].getCardNumber()) {
 	                Card t = temp[i];  
 	                temp[i] = temp[i+1];  
 	                temp[i+1] = t;
@@ -56,14 +50,14 @@ public class PokerHand extends Hand{
 		
 		if((clubs == 5) || (spades == 5) || (hearts == 5) || (diamonds == 5)){
 			flush = true;
-			pv[1] = temp[hand.size() - 1].getValue();
-			pv[2] = temp[hand.size() - 2].getValue();
+			pv[1] = temp[hand.size() - 1].getCardNumber();
+			pv[2] = temp[hand.size() - 2].getCardNumber();
 			curr += 2;
 		}
 			
 		
 		for(int i = 0; i < hand.size() - 1; i++){
-			if(temp[i+1].getValue() - temp[i].getValue() == 1){
+			if(temp[i+1].getCardNumber() - temp[i].getCardNumber() == 1){
 				s++;
 			}	
 			else{
@@ -73,8 +67,8 @@ public class PokerHand extends Hand{
 		
 		if(s == 4){
 			straight = true;
-			pv[1] = temp[hand.size() - 1].getValue();
-			pv[2] = temp[hand.size() - 2].getValue();
+			pv[1] = temp[hand.size() - 1].getCardNumber();
+			pv[2] = temp[hand.size() - 2].getCardNumber();
 			curr += 2;
 		}
 		
@@ -82,7 +76,7 @@ public class PokerHand extends Hand{
 		for(int i = 1; i <= 13; i++){
 			int count = 0;
 			for(Card c : hand){
-				if(c.getValue() == i){
+				if(c.getCardNumber() == i){
 					count++;
 				}
 			}
@@ -153,18 +147,8 @@ public class PokerHand extends Hand{
 		return pv;
 
 	}
-	public int getHighCard(){
-		Card highcard = new Card("", -1);
-		
-		for(int i = 0; i < hand.size(); i++){
-			if(hand.get(i).getValue() > highcard.getValue()){
-				highcard = hand.get(i);
-			}
-		}
-		
-		return highcard.getValue();
-	}
-	
+
+
 	public String showPokerValue(){
 		if(PokerValue()[0] == 10){
 			return "Straight Flush";
@@ -196,7 +180,7 @@ public class PokerHand extends Hand{
 		
 	}
 
-	public void dealerExchange(Deck d, JLabel [] dc){
+	public void dealerExchange(Deck d, JLabel[] dc){
 		ArrayList<Card> keepcards = new ArrayList<Card>();
 		
 		if(PokerValue()[0] == 10 || PokerValue()[0] == 8 || PokerValue()[0] == 7 || PokerValue()[0] == 6){
@@ -204,22 +188,22 @@ public class PokerHand extends Hand{
 		}
 		else if(PokerValue()[0] == 9){
 			int val = 0;
-			if(hand.get(0).getValue() == hand.get(1).getValue()){
-				val = hand.get(0).getValue();
+			if(hand.get(0).getCardNumber() == hand.get(1).getCardNumber()){
+				val = hand.get(0).getCardNumber();
 			}
 				
-			if(hand.get(3).getValue() == hand.get(4).getValue()){
-				val = hand.get(0).getValue();
+			if(hand.get(3).getCardNumber() == hand.get(4).getCardNumber()){
+				val = hand.get(0).getCardNumber();
 			}
 			Card c = null;
 			
 			for(int i = 0; i < 5; i++){
 				c = hand.get(i);	
 				
-				if(c.getValue() == val){
+				if(c.getCardNumber() == val){
 					keepcards.add(c);
 				}
-				else if(c.getValue() < 9){
+				else if(c.getCardNumber() < 9){
 					keepcards.add(d.dealCard());
 				}
 				else{
@@ -230,18 +214,18 @@ public class PokerHand extends Hand{
 		
 		else if(PokerValue()[0] == 5){
 			int val = 0;
-			if(hand.get(0).getValue() == hand.get(1).getValue()){
-				val = hand.get(0).getValue();
+			if(hand.get(0).getCardNumber() == hand.get(1).getCardNumber()){
+				val = hand.get(0).getCardNumber();
 			}
 				
-			else if(hand.get(3).getValue() == hand.get(4).getValue()){
-				val = hand.get(0).getValue();
+			else if(hand.get(3).getCardNumber() == hand.get(4).getCardNumber()){
+				val = hand.get(0).getCardNumber();
 			}
-			else if(hand.get(2).getValue() == hand.get(3).getValue()){
-				val = hand.get(0).getValue();
+			else if(hand.get(2).getCardNumber() == hand.get(3).getCardNumber()){
+				val = hand.get(0).getCardNumber();
 			}
-			if(hand.get(0).getValue() == hand.get(4).getValue()){
-				val = hand.get(0).getValue();
+			if(hand.get(0).getCardNumber() == hand.get(4).getCardNumber()){
+				val = hand.get(0).getCardNumber();
 			}
 			
 			Card c = null;
@@ -249,7 +233,7 @@ public class PokerHand extends Hand{
 			for(int i = 0; i < 5; i++){
 				c = hand.get(i);	
 				
-				if(c.getValue() == val){
+				if(c.getCardNumber() == val){
 					keepcards.add(c);
 				}
 				else{
@@ -267,12 +251,12 @@ public class PokerHand extends Hand{
 				for(int j = 0; j < 5; j++){
 					Card a = hand.get(j);
 					
-					if(c.getValue() == a.getValue() && c != a){
+					if(c.getCardNumber() == a.getCardNumber() && c != a){
 						if(val1 == -1){
-							val1 = c.getValue();
+							val1 = c.getCardNumber();
 						}
 						else{
-							val2 = c.getValue();
+							val2 = c.getCardNumber();
 						}
 					}
 				}
@@ -281,7 +265,7 @@ public class PokerHand extends Hand{
 			for(int i = 0; i < 5; i++){
 				Card b = hand.get(i);
 				
-				if(b.getValue() == val1 || b.getValue() == val2){
+				if(b.getCardNumber() == val1 || b.getCardNumber() == val2){
 					keepcards.add(b);
 				}
 				else{
@@ -298,8 +282,8 @@ public class PokerHand extends Hand{
 				for(int j = 0; j < 5; j++){
 					Card a = hand.get(j);
 					
-					if(c.getValue() == a.getValue() && c != a){
-						val = c.getValue();
+					if(c.getCardNumber() == a.getCardNumber() && c != a){
+						val = c.getCardNumber();
 						break;
 					}
 				}
@@ -308,7 +292,7 @@ public class PokerHand extends Hand{
 			for(int i = 0; i < 5; i++){
 				Card b = hand.get(i);
 				
-				if(b.getValue() == val){
+				if(b.getCardNumber() == val){
 					keepcards.add(b);
 				}
 				else{
@@ -324,7 +308,7 @@ public class PokerHand extends Hand{
 			
 			for (int pass=1; pass < n; pass++) { 
 		        for (int i=0; i < n-pass; i++) {
-		            if (temp.get(i).getValue() > temp.get(i + 1).getValue()) {
+		            if (temp.get(i).getCardNumber() > temp.get(i + 1).getCardNumber()) {
 		                Card t = temp.get(i);  
 		                temp.set(i, temp.get(i + 1));  
 		                temp.set(i + 1, t);
@@ -389,7 +373,7 @@ public class PokerHand extends Hand{
 				ArrayList<Card> st = new ArrayList<Card>();
 				
 				for(int i = 0; i < 4; i++){
-					if(temp.get(i + 1).getValue() - temp.get(i).getValue() == 1){
+					if(temp.get(i + 1).getCardNumber() - temp.get(i).getCardNumber() == 1){
 						s++;
 						if(!st.contains(temp.get(i))){
 							st.add(temp.get(i));
@@ -402,7 +386,7 @@ public class PokerHand extends Hand{
 
 				}	
 				
-				if(s >= 2 && st.get(st.size() - 1).getValue() - st.get(0).getValue() < 4){
+				if(s >= 2 && st.get(st.size() - 1).getCardNumber() - st.get(0).getCardNumber() < 4){
 					keepcards = st;
 					for(int i = keepcards.size(); i <= 5; i++){
 						keepcards.add(d.dealCard());
@@ -495,7 +479,7 @@ public class PokerHand extends Hand{
 		
 		for (int pass=1; pass < n; pass++) { 
 	        for (int i=0; i < n-pass; i++) {
-	            if (temp[i].getValue() > temp[i+1].getValue()) {
+	            if (temp[i].getCardNumber() > temp[i+1].getCardNumber()) {
 	                Card t = temp[i];  
 	                temp[i] = temp[i+1];  
 	                temp[i+1] = t;
@@ -512,7 +496,7 @@ public class PokerHand extends Hand{
 		
 		for (int pass=1; pass < num; pass++) { 
 	        for (int i=0; i < num-pass; i++) {
-	            if (temp2[i].getValue() > temp2[i+1].getValue()) {
+	            if (temp2[i].getCardNumber() > temp2[i+1].getCardNumber()) {
 	                Card t = temp2[i];  
 	                temp2[i] = temp2[i+1];  
 	                temp2[i+1] = t;
@@ -521,10 +505,10 @@ public class PokerHand extends Hand{
 	    }
 		
 		for(int i = 0; i < temp.length; i++){
-			if(temp[i].getValue() > temp2[i].getValue()){
+			if(temp[i].getCardNumber() > temp2[i].getCardNumber()){
 				return -1;
 			}
-			else if(temp[i].getValue() < temp2[i].getValue()){
+			else if(temp[i].getCardNumber() < temp2[i].getCardNumber()){
 				return 1;
 			}
 			else{
