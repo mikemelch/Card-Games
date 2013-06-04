@@ -48,7 +48,8 @@ public class VisualBJ extends JFrame implements ActionListener{
 	
 	public VisualBJ(String name){
 		super(name);
-		setBackground(new Color(0, 100, 0));
+        super.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setBackground(new Color(0, 100, 0));
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		setSize(500, 345); 	
 		hit = new JButton("Hit");
@@ -258,7 +259,16 @@ public class VisualBJ extends JFrame implements ActionListener{
 		}
 
 		else if(event.equals("Bet")){
-			amount = Integer.parseInt(bettf.getText().trim());
+
+            try{
+			    amount = Integer.parseInt(bettf.getText().trim());
+            }
+            catch(NumberFormatException e){
+               results.setText("Please enter a number");
+                return;
+            }
+
+
 			deck.shuffle();
 			if(playerHand.BJValue() == 21){
 				results.setText("BLACKJACK! You win! You win $" + amount * 3 + "!");

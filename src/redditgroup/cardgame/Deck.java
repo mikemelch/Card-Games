@@ -81,8 +81,9 @@ class Card{
             this.value = value;
         }
 
-
     };
+
+
     public static enum Suits{Hearts,Diamonds,Clubs,Spades};
 
 
@@ -92,7 +93,6 @@ class Card{
         this.suit = suit;
     }
 
-    //Returns the suit of the card.
     public String getSuitString()
     {
         return suit.toString();
@@ -102,7 +102,6 @@ class Card{
         return suit;
     }
 
-    //Returns the name of the card.
     public int getCardNumber(){
         return card.ordinal();
     }

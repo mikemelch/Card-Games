@@ -36,7 +36,8 @@ public class VisualHL extends JFrame implements ActionListener{
 	
 	public VisualHL(String name){
 		super(name);
-		setBackground(new Color(0, 100, 0));
+        super.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setBackground(new Color(0, 100, 0));
 		setLayout(new FlowLayout());
 		setSize(260, 240);
 		back = getContentPane();
@@ -59,31 +60,38 @@ public class VisualHL extends JFrame implements ActionListener{
 		higher.addActionListener(this);
 		lower.addActionListener(this);
 		newgame.addActionListener(this);
+
+        newGame();
 	}
 	public static void main(String[] args){
 		VisualHL window = new VisualHL("HighLow");
 		window.show();
 	}
+
+    public void newGame(){
+        deck.shuffle();
+        card[0] = deck.dealCard();
+        correct = 0;
+
+        numcorrect.setText("0");
+        tf.setText("");
+        iconName = new ImageIcon(card[0].getCardNumber() + " of " + card[0].getSuitString() + ".gif");
+        cardpic.setIcon(iconName);
+
+        card[1] = deck.dealCard();
+        higher.setEnabled(true);
+        lower.setEnabled(true);
+        repaint();
+    }
 	
 	public void actionPerformed(ActionEvent evt) {
 		
 		if(evt.getActionCommand().equals("New Game")){
-			deck.shuffle();
-			card[0] = deck.dealCard();
-			correct = 0;
-	
-			numcorrect.setText("0");
-			tf.setText("");
-			iconName = new ImageIcon(card[0].getCardNumber() + " of " + card[0].getSuitString() + ".gif");
-			cardpic.setIcon(iconName);
-			
-			card[1] = deck.dealCard();
-			higher.setEnabled(true);
-			lower.setEnabled(true);
+			newGame();
 		}
 		
 		else if(evt.getActionCommand().equals("Higher")){
-			iconName = new ImageIcon(card[1].getCardNumber() + " of " + card[1].getSuitString() + ".gif");
+			iconName = new ImageIcon(card[1].getFileName());
 			cardpic.setIcon(iconName);
 			
 			if((card[0].getCardNumber() < card[1].getCardNumber()))
@@ -118,7 +126,7 @@ public class VisualHL extends JFrame implements ActionListener{
 		}
 		
 		else if(evt.getActionCommand().equals("Lower")){
-			iconName = new ImageIcon(card[1].getCardNumber() + " of " + card[1].getSuitString() + ".gif");
+			iconName = new ImageIcon(card[1].getFileName());
 			cardpic.setIcon(iconName);
 			
 			if((card[0].getCardNumber() > card[1].getCardNumber()))

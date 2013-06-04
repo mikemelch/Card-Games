@@ -56,7 +56,8 @@ public class Poker extends JFrame implements ActionListener{
 	
 	public Poker(String name){
 		super(name);
-		setBackground(new Color(0, 100, 0));
+        super.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setBackground(new Color(0, 100, 0));
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		setSize(600, 380);
 		keepcards = new ArrayList<Card>();
@@ -305,11 +306,18 @@ public class Poker extends JFrame implements ActionListener{
 		}
 		
 		else if(event.equals("Bet!")){
-			
-			playerbet = Integer.parseInt(bettf.getText().trim());
+
+            try{
+			    playerbet = Integer.parseInt(bettf.getText().trim());
+            }
+            catch(NumberFormatException e){
+                results.setText("Please enter a number");
+                return;
+            }
+
 			bettf.setText("       ");
 			if(playerbet < 0){
-				bettf.setText("No cheating!");
+                results.setText("No cheating!");
 				return;
 			}
 
