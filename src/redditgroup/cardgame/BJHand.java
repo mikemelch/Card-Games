@@ -11,7 +11,7 @@ public class BJHand extends Hand
 {
 	public BJHand()
 	{
-		super();
+		super(2);
 	}
 	
 	public int BJValue()

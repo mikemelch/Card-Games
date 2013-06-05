@@ -14,6 +14,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -25,8 +27,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import java.util.Iterator;
+
+
 
 public class Poker extends JFrame implements ActionListener{
+    static int cardkeys = 0;
 	JButton[] keep = new JButton[5];
 	JButton deal;
 	JLabel dc;
@@ -51,7 +57,8 @@ public class Poker extends JFrame implements ActionListener{
 	PokerHand playerHand;
 	PokerHand dealerHand;
 	Icon iconName;
-	ArrayList<Card> keepcards;
+	//ArrayList<Card> keepcards;
+    Map<String,Card> keepcards;
 	JButton exchange;
 	
 	public Poker(String name){
@@ -60,7 +67,7 @@ public class Poker extends JFrame implements ActionListener{
         setBackground(new Color(0, 100, 0));
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		setSize(600, 380);
-		keepcards = new ArrayList<Card>();
+		keepcards = new HashMap<String, Card>();
 		deal = new JButton("Deal");
 		dc = new JLabel("Dealer:");
 		yc = new JLabel("Player:");
@@ -212,51 +219,109 @@ public class Poker extends JFrame implements ActionListener{
 		 */
 		
 		else if(event.equals("keep0")){
-			results.setText(null);
-			keep[0].setEnabled(false);
-			keepcards.add(playerHand.getCard(0));
-			if(keepcards.size() > 1){
-				exchange.setEnabled(true);
-			}
+            results.setText(null);
+            //keep[1].setEnabled(false);
+
+            if(keep[0].getText().equalsIgnoreCase("Trade")) {
+                keep[0].setText("Keep");
+                keepcards.remove(playerHand.getCard(0).getUID());
+            }
+            else{
+                keep[0].setText("Trade");
+                keepcards.put(playerHand.getCard(0).getUID(),playerHand.getCard(0));
+            }
+
+            if(keepcards.size() > 1){
+                exchange.setEnabled(true);
+            }
+            else
+                exchange.setEnabled(false);
 		}
 		else if(event.equals("keep1")){
 			results.setText(null);
-			keep[1].setEnabled(false);
-			keepcards.add(playerHand.getCard(1));
-			if(keepcards.size() > 1){
+			//keep[1].setEnabled(false);
+
+            if(keep[1].getText().equalsIgnoreCase("Trade")) {
+                keep[1].setText("Keep");
+                keepcards.remove(playerHand.getCard(1).getUID());
+            }
+            else{
+                keep[1].setText("Trade");
+                keepcards.put(playerHand.getCard(1).getUID(),playerHand.getCard(1));
+            }
+
+            if(keepcards.size() > 1){
 				exchange.setEnabled(true);
 			}
+            else
+                exchange.setEnabled(false);
 		}
 		else if(event.equals("keep2")){
-			results.setText(null);
-			keep[2].setEnabled(false);
-			keepcards.add(playerHand.getCard(2));
-			if(keepcards.size() > 1){
-				exchange.setEnabled(true);
-			}
+            results.setText(null);
+            //keep[1].setEnabled(false);
+
+            if(keep[2].getText().equalsIgnoreCase("Trade")) {
+                keep[2].setText("Keep");
+                keepcards.remove(playerHand.getCard(2).getUID());
+            }
+            else{
+                keep[2].setText("Trade");
+                keepcards.put(playerHand.getCard(2).getUID(),playerHand.getCard(2));
+            }
+
+            if(keepcards.size() > 1){
+                exchange.setEnabled(true);
+            }
+            else
+                exchange.setEnabled(false);
 		}
 		else if(event.equals("keep3")){
-			results.setText(null);
-			keep[3].setEnabled(false);
-			keepcards.add(playerHand.getCard(3));
-			if(keepcards.size() > 1){
-				exchange.setEnabled(true);
-			}
+            results.setText(null);
+            //keep[1].setEnabled(false);
+
+            if(keep[3].getText().equalsIgnoreCase("Trade")) {
+                keep[3].setText("Keep");
+                keepcards.remove(playerHand.getCard(3).getUID());
+            }
+            else{
+                keep[3].setText("Trade");
+                keepcards.put(playerHand.getCard(3).getUID(),playerHand.getCard(3));
+            }
+
+            if(keepcards.size() > 1){
+                exchange.setEnabled(true);
+            }
+            else
+                exchange.setEnabled(false);
 		}
 		else if(event.equals("keep4")){
-			results.setText(null);
-			keep[4].setEnabled(false);
-			keepcards.add(playerHand.getCard(4));
-			if(keepcards.size() > 1){
-				exchange.setEnabled(true);
-			}
+            results.setText(null);
+            //keep[1].setEnabled(false);
+
+            if(keep[4].getText().equalsIgnoreCase("Trade")) {
+                keep[4].setText("Keep");
+                keepcards.remove(playerHand.getCard(4).getUID());
+            }
+            else{
+                keep[4].setText("Trade");
+                keepcards.put(playerHand.getCard(4).getUID(),playerHand.getCard(4));
+            }
+
+            if(keepcards.size() > 1){
+                exchange.setEnabled(true);
+            }
+            else
+                exchange.setEnabled(false);
 		}
 		
 		/**
 		 * Exchanges cards that weren't kept for new ones
 		 */
 		else if(event.equals("exchange")){
-			exchanged = true;
+            //Set up an iterator for the hashmap
+            Iterator iter = keepcards.entrySet().iterator();
+
+            exchanged = true;
 			for(int i = 0; i < 5; i++){
 				keep[i].setEnabled(false);
 			}
@@ -264,16 +329,17 @@ public class Poker extends JFrame implements ActionListener{
 			playerHand.clearHand();
 			bettf.setEnabled(true);
 			bet.setEnabled(true);
-			
+
 			/**
 			 * Keeps cards from the keepcards ArrayList back to the hand
 			 */
-			for(int i = 0; i < keepcards.size(); i++){
-				playerHand.addCard(keepcards.get(i));
+            int count = 1;
+			for(Map.Entry<String,Card> entry : keepcards.entrySet()){
+				playerHand.addCard(entry.getValue());
 			}
-			for(int i = playerHand.getSize() - 1; i < 5; i++){
-				playerHand.addCard(deck.dealCard());
-			}	
+
+            //Add remaining cards
+            while(playerHand.addCard(deck.dealCard()));
 
 			/**
 			 * GUI changing of pictures
@@ -461,6 +527,12 @@ public class Poker extends JFrame implements ActionListener{
 			}
 			
 		}
+
+
+//        class cardID{
+//            private Card.Suits suit;
+//            private Card.Cards card;
+//        }
 
 			
 	}
