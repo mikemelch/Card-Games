@@ -12,15 +12,22 @@ import java.util.ArrayList;
 public class Hand 
 {
 	protected ArrayList<Card> hand;
+    private int maxSize; //Maximum size of the hand.
 
-	public Hand()
+	public Hand(int maxSize)
 	{
 		hand = new ArrayList<Card>();
+        this.maxSize = maxSize;
 	}
 	
-	public void addCard(Card temp)
+	public boolean addCard(Card temp)
 	{
+        if(hand.size() >= maxSize){
+             return false;
+        }
+
 		hand.add(temp);
+        return true;
 	}
 	
 	public int getSize()
@@ -51,4 +58,8 @@ public class Hand
 	public ArrayList<Card> getHand(){
 		return hand;
 	}
+
+    public int getMaxSize(){
+        return maxSize;
+    }
 }

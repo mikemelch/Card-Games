@@ -7,7 +7,7 @@ import javax.swing.JLabel;
 public class PokerHand extends Hand{
 	
 	public PokerHand(){
-		super();
+		super(5); //5 card poker?
 	}
 	
 	public int[] PokerValue(){
