@@ -1,4 +1,4 @@
-package game;
+package redditgroup.cardgame;
 /*
  * Texas Holdem Program
  * 
@@ -7,31 +7,18 @@ package game;
 
 
 
-import hand.PokerHand;
-
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 
-import javax.swing.BoxLayout;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import deck.Card;
-import deck.Deck;
+import javax.swing.*;
 
 
 public class TexasHoldem extends JFrame implements ActionListener{
 
-	
-	JButton deal;
+    JButton deal;
 	JButton call;
 	JButton fold;
 	JLabel dc;
@@ -60,6 +47,7 @@ public class TexasHoldem extends JFrame implements ActionListener{
 	
 	public TexasHoldem(String name){
 		super(name);
+        super.setDefaultCloseOperation(EXIT_ON_CLOSE); //You don't know what you got til it's gone.
 		setBackground(new Color(0, 100, 0));
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		setSize(650, 425);
@@ -86,6 +74,8 @@ public class TexasHoldem extends JFrame implements ActionListener{
 		buttons = new JPanel();
 		buttons2 = new JPanel();
 		player = new JPanel();
+        cc.setVisible(false);
+        dc.setVisible(false);
 		com.add(cc);
 		dealer.add(dc);
 		player.add(yc);
@@ -138,7 +128,7 @@ public class TexasHoldem extends JFrame implements ActionListener{
 
 	public void actionPerformed(ActionEvent evt) {
 		String event = evt.getActionCommand();
-
+        cc.setVisible(true);
 		if(event.equals("deal")){
 			amount = 0;
 			card = 2;
@@ -147,13 +137,16 @@ public class TexasHoldem extends JFrame implements ActionListener{
 			betb.setEnabled(true);
 			deck.shuffle();
 			deal.setEnabled(false);
+
+            cc.setVisible(true);
+            dc.setVisible(true);
+
 			for(int k = 0; k < 2; k++){
 				dealercards[k].setIcon(null);
 				playercards[k].setIcon(null);
 			}
 			for(int k = 0; k < 5; k++){
 				communitycards[k].setIcon(null);
-				
 			}
 			results.setText("");
 			playerHand.clearHand();
@@ -178,7 +171,7 @@ public class TexasHoldem extends JFrame implements ActionListener{
 			
 			
 			for(int i = 0; i < 5; i++){
-				iconName = new ImageIcon("b.gif");
+				iconName = new ImageIcon("Cards/b.gif");
 				communitycards[i].setIcon(iconName);
 				
 			}
@@ -187,9 +180,9 @@ public class TexasHoldem extends JFrame implements ActionListener{
 			 * Sets JLabels to pictures.gif
 			 */
 			for(int i = 0; i < 2; i++){
-				iconName = new ImageIcon("b.gif");
+				iconName = new ImageIcon("Cards/b.gif");
 				dealercards[i].setIcon(iconName);
-				iconName = new ImageIcon(playerHand.getCard(i).showVal() + " of " + playerHand.getCard(i).getSuit() + ".gif");
+				iconName = new ImageIcon(playerHand.getCard(i).getFileName());
 				playercards[i].setIcon(iconName);
 			}
 			bettf.setEnabled(true);
@@ -197,7 +190,15 @@ public class TexasHoldem extends JFrame implements ActionListener{
 		}
 		
 		else if(event.equals("Bet!")){
-			playerbet = Integer.parseInt(bettf.getText().trim());
+
+            try{
+			    playerbet = Integer.parseInt(bettf.getText().trim());
+            }
+            catch(NumberFormatException e){
+                results.setText("Please enter a number");
+                return;
+            }
+
 			if(playerbet < 0){
 				bettf.setText("No cheating!");
 				return;
@@ -237,7 +238,7 @@ public class TexasHoldem extends JFrame implements ActionListener{
 
 			if(card == 2){
 				for(int i = 0; i < 3; i++){
-					iconName = new ImageIcon(community.get(i).showVal() + " of " + community.get(i).getSuit() + ".gif");
+					iconName = new ImageIcon(community.get(i).getFileName());
 					communitycards[i].setIcon(iconName);
 					playerHand.addCard(community.get(i));
 					dealerHand.addCard(community.get(i));
@@ -247,7 +248,7 @@ public class TexasHoldem extends JFrame implements ActionListener{
 			}
 			
 			else if(card < 5){
-				iconName = new ImageIcon(community.get(card).showVal() + " of " + community.get(card).getSuit() + ".gif");
+				iconName = new ImageIcon(community.get(card).getFileName());
 				communitycards[card].setIcon(iconName);
 				playerHand.addCard(community.get(card));
 				dealerHand.addCard(community.get(card));
@@ -258,10 +259,10 @@ public class TexasHoldem extends JFrame implements ActionListener{
 				betb.setEnabled(false);	
 				bettf.setEnabled(false);
 				
-				iconName = new ImageIcon(dealerHand.getCard(0).showVal() + " of " + dealerHand.getCard(0).getSuit() + ".gif");
+				iconName = new ImageIcon(dealerHand.getCard(0).getFileName());
 				dealercards[0].setIcon(iconName);
 				
-				iconName = new ImageIcon(dealerHand.getCard(1).showVal() + " of " + dealerHand.getCard(1).getSuit() + ".gif");
+				iconName = new ImageIcon(dealerHand.getCard(1).getFileName());
 				dealercards[1].setIcon(iconName);
 				
 				if(playerHand.PokerValue()[0] == dealerHand.PokerValue()[0]){
@@ -306,7 +307,7 @@ public class TexasHoldem extends JFrame implements ActionListener{
 			
 			if(card == 2){
 				for(int i = 0; i < 3; i++){
-					iconName = new ImageIcon(community.get(i).showVal() + " of " + community.get(i).getSuit() + ".gif");
+					iconName = new ImageIcon(community.get(i).getFileName());
 					communitycards[i].setIcon(iconName);
 					playerHand.addCard(community.get(i));
 					dealerHand.addCard(community.get(i));
@@ -320,7 +321,7 @@ public class TexasHoldem extends JFrame implements ActionListener{
 			}
 			
 			else if(card < 5){
-				iconName = new ImageIcon(community.get(card).showVal() + " of " + community.get(card).getSuit() + ".gif");
+				iconName = new ImageIcon(community.get(card).getFileName());
 				communitycards[card].setIcon(iconName);
 				playerHand.addCard(community.get(card));
 				dealerHand.addCard(community.get(card));
@@ -334,10 +335,10 @@ public class TexasHoldem extends JFrame implements ActionListener{
 			else{
 				betb.setEnabled(false);	
 				bettf.setEnabled(false);
-				iconName = new ImageIcon(dealerHand.getCard(0).showVal() + " of " + dealerHand.getCard(0).getSuit() + ".gif");
+				iconName = new ImageIcon(dealerHand.getCard(0).getFileName());
 				dealercards[0].setIcon(iconName);
 				
-				iconName = new ImageIcon(dealerHand.getCard(1).showVal() + " of " + dealerHand.getCard(1).getSuit() + ".gif");
+				iconName = new ImageIcon(dealerHand.getCard(1).getFileName());
 				dealercards[1].setIcon(iconName);
 				
 				if(playerHand.PokerValue()[0] == dealerHand.PokerValue()[0]){

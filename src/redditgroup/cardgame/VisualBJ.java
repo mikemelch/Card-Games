@@ -1,4 +1,4 @@
-package game;
+package redditgroup.cardgame;
 ///////////////////////////////////
 //Michael Melchione
 //AP Computer Science A
@@ -7,10 +7,7 @@ package game;
 ///////////////////////////////////
 
 
-import hand.BJHand;
-
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -22,8 +19,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import deck.Deck;
 
 public class VisualBJ extends JFrame implements ActionListener{
 	
@@ -53,7 +48,8 @@ public class VisualBJ extends JFrame implements ActionListener{
 	
 	public VisualBJ(String name){
 		super(name);
-		setBackground(new Color(0, 100, 0));
+        super.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setBackground(new Color(0, 100, 0));
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		setSize(500, 345); 	
 		hit = new JButton("Hit");
@@ -154,7 +150,7 @@ public class VisualBJ extends JFrame implements ActionListener{
 		else if(event.equals("hit")){
 			doubledown.setEnabled(false);
 			playerHand.addCard(deck.dealCard());
-			iconName = new ImageIcon(playerHand.getCard(i).showVal() + " of " + playerHand.getCard(i).getSuit() + ".gif");
+			iconName = new ImageIcon(playerHand.getCard(i).getFileName());
 			playercards[i].setIcon(iconName);
 			i++;
 			if(i == 6)
@@ -172,14 +168,14 @@ public class VisualBJ extends JFrame implements ActionListener{
 		
 		else if(event.equals("stay")){
 			doubledown.setEnabled(false);
-			iconName = new ImageIcon(dealerHand.getCard(0).showVal() + " of " + dealerHand.getCard(0).getSuit() + ".gif");
+            iconName = new ImageIcon(dealerHand.getCard(0).getFileName());
 			dealercards[0].setIcon(iconName);
 			
 			while(dealerHand.BJValue() < 17)
 			{
 				
 				dealerHand.addCard(deck.dealCard());
-				iconName = new ImageIcon(dealerHand.getCard(j).showVal() + " of " + dealerHand.getCard(j).getSuit() + ".gif");
+				iconName = new ImageIcon(dealerHand.getCard(j).getFileName());
 				dealercards[j].setIcon(iconName);
 				j++;
 			}
@@ -216,7 +212,7 @@ public class VisualBJ extends JFrame implements ActionListener{
 			
 			doubledown.setEnabled(false);
 			playerHand.addCard(deck.dealCard());
-			iconName = new ImageIcon(playerHand.getCard(i).showVal() + " of " + playerHand.getCard(i).getSuit() + ".gif");
+			iconName = new ImageIcon(playerHand.getCard(i).getFileName());
 			playercards[i].setIcon(iconName);
 			i++;
 			
@@ -226,14 +222,14 @@ public class VisualBJ extends JFrame implements ActionListener{
 				lose = true;
 			}
 			else{
-				iconName = new ImageIcon(dealerHand.getCard(0).showVal() + " of " + dealerHand.getCard(0).getSuit() + ".gif");
+				iconName = new ImageIcon(dealerHand.getCard(0).getFileName());
 				dealercards[0].setIcon(iconName);
 				
 				while(dealerHand.BJValue() < 17)
 				{
 					
 					dealerHand.addCard(deck.dealCard());
-					iconName = new ImageIcon(dealerHand.getCard(j).showVal() + " of " + dealerHand.getCard(j).getSuit() + ".gif");
+					iconName = new ImageIcon(dealerHand.getCard(j).getFileName());
 					dealercards[j].setIcon(iconName);
 					j++;
 				}
@@ -263,7 +259,16 @@ public class VisualBJ extends JFrame implements ActionListener{
 		}
 
 		else if(event.equals("Bet")){
-			amount = Integer.parseInt(bettf.getText().trim());
+
+            try{
+			    amount = Integer.parseInt(bettf.getText().trim());
+            }
+            catch(NumberFormatException e){
+               results.setText("Please enter a number");
+                return;
+            }
+
+
 			deck.shuffle();
 			if(playerHand.BJValue() == 21){
 				results.setText("BLACKJACK! You win! You win $" + amount * 3 + "!");
@@ -275,7 +280,7 @@ public class VisualBJ extends JFrame implements ActionListener{
 			}
 			else if(dealerHand.BJValue() == 21){
 				results.setText("BLACKJACK! Dealer wins! You lose $" + amount + "!");
-				iconName = new ImageIcon(dealerHand.getCard(0).showVal() + " of " + dealerHand.getCard(0).getSuit() + ".gif");
+				iconName = new ImageIcon(dealerHand.getCard(0).getFileName());
 				dealercards[0].setIcon(iconName);
 				lose = true;
 				hit.setEnabled(false);
@@ -291,11 +296,11 @@ public class VisualBJ extends JFrame implements ActionListener{
 			dealerHand.addCard(deck.dealCard());
 			iconName = new ImageIcon("b.gif");
 			dealercards[0].setIcon(iconName);
-			iconName = new ImageIcon(dealerHand.getCard(1).showVal() + " of " + dealerHand.getCard(1).getSuit() + ".gif");
+			iconName = new ImageIcon(dealerHand.getCard(1).getFileName());
 			dealercards[1].setIcon(iconName);
-			iconName = new ImageIcon(playerHand.getCard(0).showVal() + " of " + playerHand.getCard(0).getSuit() + ".gif");
+			iconName = new ImageIcon(playerHand.getCard(0).getFileName());
 			playercards[0].setIcon(iconName);
-			iconName = new ImageIcon(playerHand.getCard(1).showVal() + " of " + playerHand.getCard(1).getSuit() + ".gif");
+			iconName = new ImageIcon(playerHand.getCard(1).getFileName());
 			playercards[1].setIcon(iconName);
 			doubledown.setEnabled(true);
 			hit.setEnabled(true);
