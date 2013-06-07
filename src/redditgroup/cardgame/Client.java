@@ -22,6 +22,7 @@ public class Client extends JFrame implements ActionListener{
 		setBackground(new Color(0, 100, 0));
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		setSize(350, 250);
+		
 		bj = new JPanel();
 		p = new JPanel();
 		lab = new JPanel();
@@ -43,11 +44,15 @@ public class Client extends JFrame implements ActionListener{
 		add(p);
 		add(tex);
 		add(hl);
+		
 		blackjack.addActionListener(this);
 		poker.addActionListener(this);
 		highlow.addActionListener(this);
 		texas.addActionListener(this);
 		texas.setActionCommand("texas");
+		
+		setLocationRelativeTo(null);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	public static void main(String args[]){
 		Client c = new Client("Casino");
@@ -62,7 +67,7 @@ public class Client extends JFrame implements ActionListener{
 			setVisible(false);
 		}
 		else if(event.equals("texas")){
-			TexasHoldem.main(null);
+			TH.main(null);
 			setVisible(false);
 		}
 		else if(event.equals("Poker")){
