@@ -20,45 +20,79 @@ public class Hand
         this.maxSize = maxSize;
 	}
 	
-	public boolean addCard(Card temp)
+	/**
+	 * Adds a card to the hand. If the hand is full, the method returns false.
+	 * @param currentCard Card to be added to the hand.
+	 * @return true on success, false on failure.
+	 */
+	public boolean addCard(Card currentCard)
 	{
         if(hand.size() >= maxSize){
              return false;
         }
 
-		hand.add(temp);
+		hand.add(currentCard);
         return true;
 	}
 	
+	/**
+	 * Return the number of Cards in the Hand.
+	 * @return The number of Cards in the Hand.
+	 */
 	public int getSize()
 	{
 		return hand.size();
 	}
 	
-	public void removeCard(int position)
+	/**
+	 * Removes a card from the Hand.
+	 * @param cardPosition Position of the Card in the Hand that 
+	 * will be removed.
+	 */
+	public void removeCard(int cardPosition)
 	{
-		hand.remove(position - 1);
+		hand.remove(cardPosition - 1);
 	}
 	
-	public void removeCard(Card temp)
+	/**
+	 * Removes a card from the Hand.
+	 * @param currentCard Card that will be removed.
+	 */
+	public void removeCard(Card currentCard)
 	{
-		hand.remove(temp);
+		hand.remove(currentCard);
 	}
 	
+	/**
+	 * Empties the Hand of all his Cards.
+	 */
 	public void clearHand()
 	{
 		hand.clear();
 	}
 	
+	/**
+	 * Gets the Card at the given Position in the Hand.
+	 * @param i The position of the Card in the Hand.
+	 * @return The Card at the given position in the Hand.
+	 */
 	public Card getCard(int i)
 	{
 		return hand.get(i);
 	}
 	
+	/**
+	 * Return the cards of the hand in an ArrayList.
+	 * @return Cards of the Hand.
+	 */
 	public ArrayList<Card> getHand(){
 		return hand;
 	}
 
+	/**
+	 * Gets the maximal number of Cards that are allowed in the Hand.
+	 * @return the maximal number of Cards that are allowed in the Hand.
+	 */
     public int getMaxSize(){
         return maxSize;
     }
