@@ -27,6 +27,9 @@ public class Deck {
 		dealt = 0;
 	}
 	
+    /**
+     * Shuffles the cards of the deck.
+     */
 	public void shuffle(){
 		int i;
 		int rand;
@@ -42,6 +45,11 @@ public class Deck {
 		dealt = 0;
 	}
 	
+	/**
+	 * Deals a Card from the Deck. The dealt card will no more be deal by the 
+	 * deck. If no cards are left, a IllegalStateException is thrown.
+	 * @return A Card from the deck.
+	 */
 	public Card dealCard(){
 		if(dealt == 52)
 			throw new IllegalStateException("No cards left in the deck!!!");
@@ -95,19 +103,39 @@ class Card{
         this.UID = Integer.toString(card.ordinal()) + Integer.toString(suit.ordinal());
     }
 
+    /**
+     * Return the {@link Suits}' String of the given Card. Possible values:
+     * - "Hearts"
+     * - "Diamonds"
+     * - "Clubs"
+     * - "Spades"
+     * @return String of the Suit of the Card.
+     */
     public String getSuitString()
     {
         return suit.toString();
     }
 
+    /**
+     * Return the {@link Suits} of the given Card. 
+     * @return Suit of the Card.
+     */
     public Suits getSuit(){
         return suit;
     }
 
+    /**
+     * Gets the Card Number.
+     * @return Card Number.
+     */
     public int getCardNumber(){
         return card.ordinal();
     }
 
+    /**
+     * Return the relative file location of the image of the Card.
+     * @return File location of the card's image.
+     */
     public String getFileName(){
         return "Cards/" + card.toString() + " of " + suit.toString() + ".gif";
     }
